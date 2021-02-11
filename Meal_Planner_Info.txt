@@ -19,3 +19,9 @@ Notes:
   - can just leave boxes unchecked to show all items in that category
   - perhaps different boxes to check depending on the day
   - should be an option to add a veggie meal for each day
+- could also have a shopping list function
+  - make a list and remove and add items like normal
+  - if you tell it how much of each ingredient goes into each meal, it could make a shopping list of the things needed to make the meals for the week
+  - should be able to remove/modify each item it automatically puts on the list
+  - could tell it which items are items are regular items (like milk) so it will automatically add them onto the list created for the new week
+  - list for each week should be saved so can be referred to later, but lists deleted once no longer needed

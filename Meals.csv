@@ -1,0 +1,49 @@
+Chicken,n,r,c
+Pork,n,r,p
+Beef,n,r,b
+Ham,n,r,p
+Burgers,n,n,b
+Hotdogs,n,n,p
+Shepherds Pie,n,n,b
+Lasagne,n,n,b
+Beef Strogonoff,n,n,b
+Meatballs and Gravy,n,n,p
+Meatballs and Tomato Sauce and Spaghetti,n,n,p
+Breakfast Bake,n,n,p
+Bolognaise,n,n,b
+Chilli con Carnie,n,n,b
+Beef Stew,n,n,b
+Spaghetti Carbonara,n,n,p
+Paella,n,n,c
+Stirfry,n,n,c
+Thai Curry,n,n,c
+Indian Curry,n,n,c
+Fahitas,n,n,c
+Chicken Burgers,n,n,c
+Chicken Pesto Pasta,n,n,c
+Risotto,n,n,c
+Kebabs,n,n,c
+Fishcakes,n,n,f
+Fish Pie,n,n,f
+Salmon Couscous,n,n,f
+Salmon and Hollandaise,n,n,f
+Fish and Chips,n,n,f
+Coa and Tomato Sauce,n,n,f
+Veggie Lasagne,y,n,v
+Veggie Stirfry,y,n,v
+Quasidillas,y,n,v
+Spanish Omelette,y,n,v
+Cheesy Jackets,y,n,v
+Pizza,y,n,v
+Quiche,y,n,v
+Curry (Cauliflower and Chick Peas),y,n,v
+Hash Brown and Eggs,y,n,v
+Gnocchi,y,n,v
+Bacon and Feta Salad,n,n,p
+Biryani,y,n,v
+Minestrone Soup,n,s,p
+Leek and Potato Soup,y,s,v
+Chicken Soup,n,s,c
+Butternut and Red Pepper Soup,y,s,v
+Fish Chowder,n,s,f
+Carrot and Coriander Soup,y,s,v

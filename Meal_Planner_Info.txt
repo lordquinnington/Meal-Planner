@@ -34,6 +34,8 @@ Notes:
 - needs to check for repeated items in the meal plan and change them if there is
 - default settings for creating a meal plan like sunday => roast, monday => good for leftovers, saturday => veggie idk
 - should be able to have a look at next week and the week afters meal plan
+- after trying something new, could get it to come up with a pop up asking if it should be added to the main list, kept on the try something new list or removed entirely
+- trry add swapping of days in the meal plan
 
 GUI Notes:
 - could try moving the meal plan closer to the centre and having meal idea on top of random meal idea on top of try something new on top of the suggestion box on top of the meal today box with the date and meal idea. view shopping list and add new item could be on the right of the meal plan in the smaller space

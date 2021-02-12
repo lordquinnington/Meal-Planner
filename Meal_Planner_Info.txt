@@ -2,6 +2,7 @@ CSV: meal name,vegetarian: yes(y)/no(n), type of meal: roast(r)/normal(n)/soup(s
 
 Notes:
 - perhaps a seperate file for "try something new" meals
+- randomly generate a meal (which isn't a roast unless Sunday)
 - could either list all meals matching that criteria or just randomly choose one to be decisive
 - need to be able to randomly generate another one if not happy with the first etc
 - meal plan should be saved so it can be viewed later
@@ -25,3 +26,16 @@ Notes:
   - should be able to remove/modify each item it automatically puts on the list
   - could tell it which items are items are regular items (like milk) so it will automatically add them onto the list created for the new week
   - list for each week should be saved so can be referred to later, but lists deleted once no longer needed
+- put in requirements for the week, so perhaps one day meat, one day veggie, one day roast, and one day roast and the rest whatever etc etc
+- edit button on the meal planner should allow to filter or just generate a new random meal
+- edit button on meal planner also needs the option to add a veggie meal
+- sunday needs to have roast automatically applied (and the other days not) but still with the option to override it
+- perhaps retains the filters with an option to reset them for the meal idea button
+- needs to check for repeated items in the meal plan and change them if there is
+- default settings for creating a meal plan like sunday => roast, monday => good for leftovers, saturday => veggie idk
+- should be able to have a look at next week and the week afters meal plan
+
+GUI Notes:
+- could try moving the meal plan closer to the centre and having meal idea on top of random meal idea on top of try something new on top of the suggestion box on top of the meal today box with the date and meal idea. view shopping list and add new item could be on the right of the meal plan in the smaller space
+- need to have an add/remove veggie meal on the meal plan
+- arrow to move between weeks for the meal plab

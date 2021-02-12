@@ -1,6 +1,6 @@
 #~~~~~ Meal Planner ~~~~~#
 
-import csv
+import csv, random
 
 def readMealsFile():
     with open("Meals.csv") as mealsFile:
@@ -42,10 +42,6 @@ def filterMeals(mealsArray,veggie,meal,meat):
             if filterByProperty(meat,mealsArray[i][3]) == True:
                 typeMeat.append(mealsArray[i][0])
 
-    #print(typeVeggie)
-    #print(typeMeal)
-    #print(typeMeat)
-
     for i in range(len(mealsArray)):
         try:
             if typeVeggie[i] in typeMeal and typeVeggie[i] in typeMeat:
@@ -56,8 +52,40 @@ def filterMeals(mealsArray,veggie,meal,meat):
 
     return potentialMeals
 
+def combineMultipleFilters(pPotentialMeals):
+    potentialMeals = pPotentialMeals[0]
+    for i in range(1,len(pPotentialMeals)):
+        for j in range(len(pPotentialMeals[i])):
+            if pPotentialMeals[i][j] not in potentialMeals:
+                potentialMeals.append(pPotentialMeals[i][j])
+
+    return potentialMeals
+
+def generateMeal(potentialMeals):
+    if len(potentialMeals) != 0:
+        return potentialMeals[random.randint(0,len(potentialMeals)-1)]
+
+    return None
+
 mealsArray = readMealsFile()
-potentialMeals = filterMeals(mealsArray,'n','n',None)
+potentialMeals = filterMeals(mealsArray,'n','n','b')
+potentialMeals2 = filterMeals(mealsArray,'n','n','c')
+potentialMeals3 = filterMeals(mealsArray,'y','n','v')
 
 print(potentialMeals)
 print(len(potentialMeals))
+
+print(potentialMeals2)
+print(len(potentialMeals2))
+
+print(potentialMeals3)
+print(len(potentialMeals3))
+
+allPotentialMeals = [potentialMeals,potentialMeals2,potentialMeals3]
+meals = combineMultipleFilters(allPotentialMeals)
+
+print(meals)
+print(len(meals))
+
+for i in range(7):
+    print(generateMeal(meals))

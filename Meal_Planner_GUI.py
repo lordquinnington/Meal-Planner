@@ -2,7 +2,7 @@
 
 import pygame
 from time import sleep
-from Meal_Planner import reverseBoolean
+from Meal_Output_Generator_Size import findSize
 
 def MPGUImain():
     pygame.init()
@@ -10,6 +10,7 @@ def MPGUImain():
     pygame.display.set_caption("Meal Planner")
 
     version = "1.0.0"
+    mealGeneratedOutput = "Cheesy Jacketsssssss"
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     running = True
     inMain = True
@@ -18,6 +19,7 @@ def MPGUImain():
     darkGrey = (61,57,58,255)     # background
     semiDarkGrey = (70,66,67,255)     # button colour
     grey = (87,86,86,255)     # button colour outline
+    lighterGrey = ()     # smaller button colours
     lightPurple = (156,105,224,255)     # button colour hover
     purple = (116,75,172,255)     # button colour pressed
     orange = (249,116,95,255)     # line colour
@@ -25,6 +27,8 @@ def MPGUImain():
 
     text1 = pygame.font.SysFont('verdana',50)     # meal planner text
     text2 = pygame.font.SysFont('verdana',22)     # info text
+    text3 = pygame.font.SysFont('verdana',26)     # "Meal:" text in meal generator output box
+    text4 = pygame.font.SysFont('verdana',17)     # "Add..." text in meal generator output box
 
     while running:
         for event in pygame.event.get():
@@ -49,6 +53,29 @@ def MPGUImain():
             if (20) < mousePos[0] < (500) and (70*i+80) < mousePos[1] < (70*i+140):
                 pygame.draw.rect(display,lightPurple,(20,70*i+80,480,60),border_radius=8)
                 pygame.draw.rect(display,purple,(20,70*i+80,480,60),border_radius=8,width=2)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(display,purple,(20,70*i+80,480,60),border_radius=8)
+                    pygame.draw.rect(display,purple,(20,70*i+80,480,60),border_radius=8,width=2)
+
+        pygame.draw.rect(display,semiDarkGrey,(20,300,480,70),border_radius=5)     # meal generator output box background
+        pygame.draw.rect(display,purple,(20,300,480,70),border_radius=5,width=2)     # meal generator output box outline
+        display.blit(text3.render("Meal:",False,lightGrey),(28,303))
+        pygame.draw.rect(display,semiDarkGrey,(28,336,68,28),border_radius=4)     # add button for the generated meal output box
+        
+        if (28) < mousePos[0] < (96) and (336) < mousePos[1] < (364):     # "add..." button logic 
+            pygame.draw.rect(display,grey,(28,336,68,28),border_radius=4)
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.rect(display,semiDarkGrey,(28,336,68,28),border_radius=4)
+            
+        pygame.draw.rect(display,orange,(28,336,68,28),border_radius=4,width=1)     # outline for the "Add..." button
+        display.blit(text4.render("Add...",False,orange),(37,339))     # text for the "Add..." button
+        if mealGeneratedOutput != "":
+            x, y = findSize(len(list(mealGeneratedOutput)))
+            print(x,y)
+            mealOutputText = pygame.font.SysFont('verdana',x)
+            display.blit(mealOutputText.render(mealGeneratedOutput,False,purple),(110,296+y))
 
         pygame.display.flip()
         sleep(0.082)

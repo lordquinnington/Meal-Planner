@@ -41,3 +41,4 @@ GUI Notes:
 - could try moving the meal plan closer to the centre and having meal idea on top of random meal idea on top of try something new on top of the suggestion box on top of the meal today box with the date and meal idea. view shopping list and add new item could be on the right of the meal plan in the smaller space
 - need to have an add/remove veggie meal on the meal plan
 - arrow to move between weeks for the meal plab
+- have an add button in the randomly generated meal which brings up a new screen and adds it to which ever day you want

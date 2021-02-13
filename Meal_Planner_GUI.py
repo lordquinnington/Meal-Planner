@@ -10,7 +10,7 @@ def MPGUImain():
     pygame.display.set_caption("Meal Planner")
 
     version = "1.0.0"
-    mealGeneratedOutput = "Cheesy Jacketsssssss"
+    mealGeneratedOutput = ""
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     running = True
     inMain = True
@@ -73,9 +73,9 @@ def MPGUImain():
         display.blit(text4.render("Add...",False,orange),(37,339))     # text for the "Add..." button
         if mealGeneratedOutput != "":
             x, y = findSize(len(list(mealGeneratedOutput)))
-            print(x,y)
+            #print(x,y)
             mealOutputText = pygame.font.SysFont('verdana',x)
-            display.blit(mealOutputText.render(mealGeneratedOutput,False,purple),(110,296+y))
+            display.blit(mealOutputText.render(mealGeneratedOutput,False,purple),(110,292+y))
 
         pygame.display.flip()
         sleep(0.082)

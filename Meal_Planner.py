@@ -1,6 +1,7 @@
 #~~~~~ Meal Planner ~~~~~#
 
 import csv, random
+from datetime import date
 
 def readMealsFile():
     with open("Meals.csv") as mealsFile:
@@ -72,6 +73,10 @@ def reverseBoolean(previous):
         return False
 
     return True
+
+def getCurrentDate():
+    today = date.today()
+    return today.strftime("%d/%m/%y")
 
 mealsArray = readMealsFile()
 potentialMeals = filterMeals(mealsArray,'n','n','b')

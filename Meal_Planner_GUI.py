@@ -3,14 +3,16 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize
+from Meal_Planner import getCurrentDate
 
 def MPGUImain():
     pygame.init()
-    display = pygame.display.set_mode((950,601))
+    display = pygame.display.set_mode((950,611))
     pygame.display.set_caption("Meal Planner")
 
     version = "1.0.0"
-    mealGeneratedOutput = "Pizza"
+    mealGeneratedOutput = ""
+    date = getCurrentDate()
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     running = True
     inMain = True
@@ -27,7 +29,7 @@ def MPGUImain():
 
     text1 = pygame.font.SysFont('verdana',50)     # meal planner text
     text2 = pygame.font.SysFont('verdana',22)     # info text
-    text3 = pygame.font.SysFont('verdana',26)     # "Meal:" text in meal generator output box
+    text3 = pygame.font.SysFont('verdana',26)     # "Meal:" text in meal generator output box and buttons at bottom of the screen
     text4 = pygame.font.SysFont('verdana',17)     # "Add..." text in meal generator output box
     text5 = pygame.font.SysFont('verdana',20)     # cross button
     text6 = pygame.font.SysFont('verdana',35)     # meal idea buttons
@@ -44,10 +46,15 @@ def MPGUImain():
         ################################ left hand side ################################
         ################################################################################
 
+        ################################ GUI info ################################
+
         display.blit(text1.render("Meal Planner",False,lightGrey),(20,0))     # draws main meal planner text in top left
         display.blit(text2.render("version",False,lightGrey),(363,5))     # version text
         display.blit(text2.render(version,False,orange),(448,5))     # version text
         display.blit(text2.render("Mattyou Quinn",False,lightGrey),(352,28))     # author credit lol
+        
+
+        ################################ meal idea buttons ################################
 
         for i in range(3):     # new meal idea, random meal idea, try something new boxes
             pygame.draw.rect(display,semiDarkGrey,(20,70*i+80,480,60),border_radius=8)
@@ -64,6 +71,9 @@ def MPGUImain():
         display.blit(text6.render("New Meal Idea",False,lightGrey),(130,86))     # meal idea buttons text
         display.blit(text6.render("Random Meal Idea",False,lightGrey),(95,156))
         display.blit(text6.render("Try Something New",False,lightGrey),(86,226))
+        
+
+        ################################ meal output box ################################
 
         pygame.draw.rect(display,semiDarkGrey,(20,300,480,70),border_radius=5)     # meal generator output box background
         pygame.draw.rect(display,purple,(20,300,480,70),border_radius=5,width=2)     # meal generator output box outline
@@ -83,7 +93,7 @@ def MPGUImain():
             x, y = findSize(len(list(mealGeneratedOutput)))
             mealOutputText = pygame.font.SysFont('verdana',x)
             display.blit(mealOutputText.render(mealGeneratedOutput,False,purple),(110,292+y))
-
+            
         if (480) < mousePos[0] < (496) and (305) < mousePos[1] < (322):     # cross button logic
             pygame.draw.rect(display,grey,(481,306,14,15),border_radius=3)
 
@@ -95,7 +105,31 @@ def MPGUImain():
             pygame.draw.rect(display,red,(480,305,16,17),border_radius=3,width=1)
 
         display.blit(text5.render("x",False,red),(483,298))      # cross button to remove item generated
+        
 
+        ################################ meal by day box ################################
+
+        pygame.draw.rect(display,semiDarkGrey,(20,390,480,155),border_radius=5)     # main box for the current day meal
+        pygame.draw.rect(display,purple,(20,390,480,155),border_radius=5,width=2)
+
+        
+        ################################ bottom buttons ################################
+
+        for i in range(2):     # buttons at the bottom of the screen
+            pygame.draw.rect(display,semiDarkGrey,(250*i+20,555,230,45),border_radius=8)
+            pygame.draw.rect(display,grey,(250*i+20,555,230,45),border_radius=8,width=2)
+
+            if (250*i+20) < mousePos[0] < (250*i+250) and (555) < mousePos[1] < (600):     # button logic
+                pygame.draw.rect(display,lightPurple,(250*i+20,555,230,45),border_radius=8)
+                pygame.draw.rect(display,purple,(250*i+20,555,230,45),border_radius=8,width=2)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(display,purple,(250*i+20,555,230,45),border_radius=8)
+                    pygame.draw.rect(display,purple,(250*i+20,555,230,45),border_radius=8,width=2)
+
+        display.blit(text3.render("Settings",False,lightGrey),(83,560))
+        display.blit(text3.render("New Plan",False,lightGrey),(325,560))
+            
 
         ###############################################################################
         ############################### right hand side ###############################

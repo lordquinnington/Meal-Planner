@@ -42,3 +42,4 @@ GUI Notes:
 - need to have an add/remove veggie meal on the meal plan
 - arrow to move between weeks for the meal plab
 - have an add button in the randomly generated meal which brings up a new screen and adds it to which ever day you want
+- on the font size finder thing, perhaps add validation so if you give it a really long string, it wont make it miniscule and instead cut it off

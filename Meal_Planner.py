@@ -67,6 +67,12 @@ def generateMeal(potentialMeals):
 
     return None
 
+def reverseBoolean(previous):
+    if previous == True:
+        return False
+
+    return True
+
 mealsArray = readMealsFile()
 potentialMeals = filterMeals(mealsArray,'n','n','b')
 potentialMeals2 = filterMeals(mealsArray,'n','n','c')

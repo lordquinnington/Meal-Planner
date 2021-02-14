@@ -3,7 +3,7 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize
-from Meal_Planner import getCurrentDate, getCurrentDay, generateNewRandomMeal
+from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate
 
 def MPGUImain():
     pygame.init()
@@ -12,8 +12,10 @@ def MPGUImain():
 
     version = "1.0.0"
     mealGeneratedOutput = ""
-    date = getCurrentDate()
-    day, ignore = getCurrentDay()
+    dayDiff = 0
+    mealByDay = mealByDayBox(dayDiff)
+    weekDiff = 0
+    shortDate = getShortDate(weekDiff)
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     running = True
     inMain = True
@@ -119,14 +121,18 @@ def MPGUImain():
         pygame.draw.rect(display,semiDarkGrey,(20,390,480,155),border_radius=5)     # main box for the current day meal
         pygame.draw.rect(display,purple,(20,390,480,155),border_radius=5,width=2)
 
-        display.blit(text6.render(day,False,lightGrey),(43,395))     # date and day text
-        display.blit(text6.render(date,False,lightGrey),(245,395))
+        display.blit(text6.render(mealByDay[1],False,lightGrey),(43,395))     # date and day text
+        display.blit(text6.render(mealByDay[0],False,lightGrey),(270,395))
 
         if (457) < mousePos[0] < (484) and (398) < mousePos[1] < (463):     # arrow button logic
             pygame.draw.rect(display,grey,(457,399,27,65),border_radius=3)
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.draw.rect(display,semiDarkGrey,(457,399,27,65),border_radius=3)
+
+                if dayDiff < 14:
+                    dayDiff += 1
+                    mealByDay = mealByDayBox(dayDiff)
             
             pygame.draw.rect(display,purple,(457,399,27,65),border_radius=3,width=1)
 
@@ -135,6 +141,10 @@ def MPGUImain():
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.draw.rect(display,semiDarkGrey,(457,472,27,65),border_radius=3)
+
+                if dayDiff > -14:
+                    dayDiff -= 1
+                    mealByDay = mealByDayBox(dayDiff)
             
             pygame.draw.rect(display,purple,(457,472,27,65),border_radius=3,width=1)
 
@@ -187,6 +197,41 @@ def MPGUImain():
 
             pygame.draw.rect(display,orange,(530,74*i+63,57,27),border_radius=4,width=1)
             display.blit(text5.render("Edit",False,orange),(540,74*i+63))
+
+
+        ################################ week commencing stuff ################################
+
+        display.blit(text1.render(shortDate,False,orange),(643,543))     # week commencing date
+
+        if (541) < mousePos[0] < (631) and (562) < mousePos[1] < (589):     # arrow button logic
+            pygame.draw.rect(display,semiDarkGrey,(541,562,91,29),border_radius=3)
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.rect(display,darkGrey,(541,562,91,29),border_radius=3)
+
+                if weekDiff > -2:
+                    weekDiff -= 1
+                    shortDate = getShortDate(weekDiff)
+            
+            pygame.draw.rect(display,purple,(541,562,91,29),border_radius=3,width=1)
+
+        if (802) < mousePos[0] < (892) and (562) < mousePos[1] < (589):
+            pygame.draw.rect(display,semiDarkGrey,(802,562,92,29),border_radius=3)
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.rect(display,darkGrey,(802,562,92,29),border_radius=3)
+
+                if weekDiff < 2:
+                    weekDiff += 1
+                    shortDate = getShortDate(weekDiff)
+            
+            pygame.draw.rect(display,purple,(802,562,92,29),border_radius=3,width=1)
+
+        pygame.draw.line(display,purple,start_pos=(628,576),end_pos=(558,576),width=3)     # lines for main body of arrow
+        pygame.draw.line(display,purple,start_pos=(805,576),end_pos=(875,576),width=3)
+
+        pygame.draw.polygon(display,purple,((890,576),(875,565),(875,587)))     # triangles for the arrows
+        pygame.draw.polygon(display,purple,((543,576),(558,565),(558,587)))     # left/right vertex, top vertex, bottom vertex
 
         pygame.display.flip()
         sleep(0.082)

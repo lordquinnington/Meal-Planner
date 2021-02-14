@@ -156,4 +156,38 @@ def mealByDayBox(dayDiff):
 
     day = days[pos]    
 
-    return [date,day]   
+    return [date,day]
+
+def getWeekCommencing():
+    ignore, pos = getCurrentDay()
+
+    wc = datetime.datetime.now() - datetime.timedelta(days=pos)
+
+    return wc
+
+def getShortDate(weekDiff):
+    wc = getWeekCommencing()
+
+    if weekDiff >= 0:
+        x = wc + datetime.timedelta(weeks=weekDiff)
+
+    else:
+        weekDiff = weekDiff * -1
+
+        x = wc - datetime.timedelta(weeks=weekDiff)
+
+    weekCommencing = x.strftime("%d/%m")
+
+    return weekCommencing
+
+def generateMealPlan():
+    template = readCSVFile("Meal_Plan_Defaults")
+    
+    
+
+
+
+
+
+
+    

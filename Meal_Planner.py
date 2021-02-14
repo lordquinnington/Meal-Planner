@@ -1,7 +1,7 @@
 #~~~~~ Meal Planner ~~~~~#
 
 import csv, random
-from datetime import date
+import datetime
 
 def readMealsFile():
     with open("Meals.csv") as mealsFile:
@@ -75,28 +75,58 @@ def reverseBoolean(previous):
     return True
 
 def getCurrentDate():
-    today = date.today()
+    today = datetime.date.today()
+    
     return today.strftime("%d/%m/%y")
 
-mealsArray = readMealsFile()
-potentialMeals = filterMeals(mealsArray,'n','n','b')
-potentialMeals2 = filterMeals(mealsArray,'n','n','c')
-potentialMeals3 = filterMeals(mealsArray,'y','n','v')
+def getCurrentDay():
+    days = ("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")
+    
+    today = str(datetime.date.today())
 
-print(potentialMeals)
-print(len(potentialMeals))
+    x1 = list(today)     # annoyingly have to convert the date into the correct format
+    
+    x2 = ""
+    for i in range(4):
+        x2 += x1[i]
+    x2 = int(x2)
 
-print(potentialMeals2)
-print(len(potentialMeals2))
+    x3 = ""
+    for i in range(2):
+        x3 += x1[5+i]
+    x3 = int(x3)
+    
+    x4 = ""
+    for i in range(2):
+        x4 += x1[8+i]
+    x4 = int(x4)
+    
+    y = datetime.date(x2,x3,x4)
+    dayToday = y.weekday()
+    
+    return days[dayToday]
 
-print(potentialMeals3)
-print(len(potentialMeals3))
+##mealsArray = readMealsFile()
+##potentialMeals = filterMeals(mealsArray,'n','n','b')
+##potentialMeals2 = filterMeals(mealsArray,'n','n','c')
+##potentialMeals3 = filterMeals(mealsArray,'y','n','v')
+##
+##print(potentialMeals)
+##print(len(potentialMeals))
+##
+##print(potentialMeals2)
+##print(len(potentialMeals2))
+##
+##print(potentialMeals3)
+##print(len(potentialMeals3))
+##
+##allPotentialMeals = [potentialMeals,potentialMeals2,potentialMeals3]
+##meals = combineMultipleFilters(allPotentialMeals)
+##
+##print(meals)
+##print(len(meals))
+##
+##for i in range(7):
+##    print(generateMeal(meals))
 
-allPotentialMeals = [potentialMeals,potentialMeals2,potentialMeals3]
-meals = combineMultipleFilters(allPotentialMeals)
-
-print(meals)
-print(len(meals))
-
-for i in range(7):
-    print(generateMeal(meals))
+print(getCurrentDay())

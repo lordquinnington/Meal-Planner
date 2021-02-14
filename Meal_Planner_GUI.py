@@ -3,7 +3,7 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize
-from Meal_Planner import getCurrentDate
+from Meal_Planner import getCurrentDate, getCurrentDay
 
 def MPGUImain():
     pygame.init()
@@ -13,6 +13,7 @@ def MPGUImain():
     version = "1.0.0"
     mealGeneratedOutput = ""
     date = getCurrentDate()
+    day = getCurrentDay()
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     running = True
     inMain = True
@@ -32,7 +33,7 @@ def MPGUImain():
     text3 = pygame.font.SysFont('verdana',26)     # "Meal:" text in meal generator output box and buttons at bottom of the screen
     text4 = pygame.font.SysFont('verdana',17)     # "Add..." text in meal generator output box
     text5 = pygame.font.SysFont('verdana',20)     # cross button
-    text6 = pygame.font.SysFont('verdana',35)     # meal idea buttons
+    text6 = pygame.font.SysFont('verdana',35)     # meal idea buttons and meal by day date text
 
     while running:
         for event in pygame.event.get():
@@ -112,6 +113,15 @@ def MPGUImain():
         pygame.draw.rect(display,semiDarkGrey,(20,390,480,155),border_radius=5)     # main box for the current day meal
         pygame.draw.rect(display,purple,(20,390,480,155),border_radius=5,width=2)
 
+        display.blit(text6.render(day,False,lightGrey),(43,395))     # date and day text
+        display.blit(text6.render(date,False,lightGrey),(245,395))
+
+        pygame.draw.line(display,purple,start_pos=(470,460),end_pos=(470,410),width=3)     # lines for body of arrows
+        pygame.draw.line(display,purple,start_pos=(470,475),end_pos=(470,525),width=3)
+
+        pygame.draw.polygon(display,purple,((470,401),(460,416),(480,416)))     # triangles for the arrows
+        pygame.draw.polygon(display,purple,((470,534),(460,519),(480,519)))     # top vertex, left vertex, right vertex
+
         
         ################################ bottom buttons ################################
 
@@ -134,6 +144,8 @@ def MPGUImain():
         ###############################################################################
         ############################### right hand side ###############################
         ###############################################################################
+
+        ################################ main box outline ################################
 
         pygame.draw.rect(display,semiDarkGrey,(520,20,400,525),border_radius=4)     # meal plan week background
         pygame.draw.rect(display,purple,(520,20,400,525),border_radius=4,width=3)     # meal plan week outline

@@ -43,3 +43,30 @@ GUI Notes:
 - arrow to move between weeks for the meal plab
 - have an add button in the randomly generated meal which brings up a new screen and adds it to which ever day you want
 - on the font size finder thing, perhaps add validation so if you give it a really long string, it wont make it miniscule and instead cut it off
+
+
+##mealsArray = readMealsFile()
+##potentialMeals = filterMeals(mealsArray,'n','n','b')
+##potentialMeals2 = filterMeals(mealsArray,'n','n','c')
+##potentialMeals3 = filterMeals(mealsArray,'y','n','v')
+##
+##print(potentialMeals)
+##print(len(potentialMeals))
+##
+##print(potentialMeals2)
+##print(len(potentialMeals2))
+##
+##print(potentialMeals3)
+##print(len(potentialMeals3))
+##
+##allPotentialMeals = [potentialMeals,potentialMeals2,potentialMeals3]
+##meals = combineMultipleFilters(allPotentialMeals)
+##
+##print(meals)
+##print(len(meals))
+##
+##for i in range(7):
+##    print(generateMeal(meals))
+
+def getWeekCommencing():
+    return

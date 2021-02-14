@@ -3,7 +3,7 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize
-from Meal_Planner import getCurrentDate, getCurrentDay
+from Meal_Planner import getCurrentDate, getCurrentDay, generateNewRandomMeal
 
 def MPGUImain():
     pygame.init()
@@ -13,7 +13,7 @@ def MPGUImain():
     version = "1.0.0"
     mealGeneratedOutput = ""
     date = getCurrentDate()
-    day = getCurrentDay()
+    day, ignore = getCurrentDay()
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     running = True
     inMain = True
@@ -32,8 +32,9 @@ def MPGUImain():
     text2 = pygame.font.SysFont('verdana',22)     # info text
     text3 = pygame.font.SysFont('verdana',26)     # "Meal:" text in meal generator output box and buttons at bottom of the screen
     text4 = pygame.font.SysFont('verdana',17)     # "Add..." text in meal generator output box
-    text5 = pygame.font.SysFont('verdana',20)     # cross button
+    text5 = pygame.font.SysFont('verdana',20)     # cross button and edit buttons
     text6 = pygame.font.SysFont('verdana',35)     # meal idea buttons and meal by day date text
+    text7 = pygame.font.SysFont('verdana',30)     # days of the week font
 
     while running:
         for event in pygame.event.get():
@@ -69,6 +70,12 @@ def MPGUImain():
                     pygame.draw.rect(display,purple,(20,70*i+80,480,60),border_radius=8)
                     pygame.draw.rect(display,purple,(20,70*i+80,480,60),border_radius=8,width=2)
 
+                    if i == 1:
+                        mealGeneratedOutput = generateNewRandomMeal("Meals")
+
+                    if i == 2:
+                        mealGeneratedOutput = generateNewRandomMeal("New_Meals")
+
         display.blit(text6.render("New Meal Idea",False,lightGrey),(130,86))     # meal idea buttons text
         display.blit(text6.render("Random Meal Idea",False,lightGrey),(95,156))
         display.blit(text6.render("Try Something New",False,lightGrey),(86,226))
@@ -79,7 +86,6 @@ def MPGUImain():
         pygame.draw.rect(display,semiDarkGrey,(20,300,480,70),border_radius=5)     # meal generator output box background
         pygame.draw.rect(display,purple,(20,300,480,70),border_radius=5,width=2)     # meal generator output box outline
         display.blit(text3.render("Meal:",False,lightGrey),(28,303))
-        pygame.draw.rect(display,semiDarkGrey,(28,336,68,28),border_radius=4)     # add button for the generated meal output box
         
         if (28) < mousePos[0] < (96) and (336) < mousePos[1] < (364):     # "add..." button logic 
             pygame.draw.rect(display,grey,(28,336,68,28),border_radius=4)
@@ -116,11 +122,28 @@ def MPGUImain():
         display.blit(text6.render(day,False,lightGrey),(43,395))     # date and day text
         display.blit(text6.render(date,False,lightGrey),(245,395))
 
+        if (457) < mousePos[0] < (484) and (398) < mousePos[1] < (463):     # arrow button logic
+            pygame.draw.rect(display,grey,(457,399,27,65),border_radius=3)
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.rect(display,semiDarkGrey,(457,399,27,65),border_radius=3)
+            
+            pygame.draw.rect(display,purple,(457,399,27,65),border_radius=3,width=1)
+
+        if (457) < mousePos[0] < (484) and (472) < mousePos[1] < (537):
+            pygame.draw.rect(display,grey,(457,472,27,65),border_radius=3)
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.rect(display,semiDarkGrey,(457,472,27,65),border_radius=3)
+            
+            pygame.draw.rect(display,purple,(457,472,27,65),border_radius=3,width=1)
+
         pygame.draw.line(display,purple,start_pos=(470,460),end_pos=(470,410),width=3)     # lines for body of arrows
         pygame.draw.line(display,purple,start_pos=(470,475),end_pos=(470,525),width=3)
 
         pygame.draw.polygon(display,purple,((470,401),(460,416),(480,416)))     # triangles for the arrows
         pygame.draw.polygon(display,purple,((470,534),(460,519),(480,519)))     # top vertex, left vertex, right vertex
+
 
         
         ################################ bottom buttons ################################
@@ -149,6 +172,21 @@ def MPGUImain():
 
         pygame.draw.rect(display,semiDarkGrey,(520,20,400,525),border_radius=4)     # meal plan week background
         pygame.draw.rect(display,purple,(520,20,400,525),border_radius=4,width=3)     # meal plan week outline
+
+        for i in range(6):
+            pygame.draw.line(display,purple,start_pos=(520,74*i+96),end_pos=(918,74*i+96),width=2)     # dividers for each day
+
+        for i in range(7):
+            display.blit(text7.render(daysOfWeek[i],False,lightGrey),(530,74*i+23))     # adds the days of the week
+
+            if (530) < mousePos[0] < (587) and (74*i+63) < mousePos[1] < (74*i+90):     # edit button logic
+                pygame.draw.rect(display,grey,(530,74*i+63,57,27),border_radius=4)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(display,semiDarkGrey,(530,74*i+63,57,27),border_radius=4)
+
+            pygame.draw.rect(display,orange,(530,74*i+63,57,27),border_radius=4,width=1)
+            display.blit(text5.render("Edit",False,orange),(540,74*i+63))
 
         pygame.display.flip()
         sleep(0.082)

@@ -1,15 +1,14 @@
 #~~~~~ Meal Planner ~~~~~#
 
-import csv, random
-import datetime
+import csv, random, datetime
 
-def readMealsFile():
-    with open("Meals.csv") as mealsFile:
-        mealsArray = list(csv.reader(mealsFile))
+def readCSVFile(name):
+    with open(name+".csv") as file:
+        array = list(csv.reader(file))
 
-    return mealsArray
+    return array
 
-def filterByProperty(prop,rProp):      # prop => property of it
+def filterByProperty(prop,rProp):      # prop => property of it, r => required
     if rProp == prop:
         return True
 
@@ -66,7 +65,7 @@ def generateMeal(potentialMeals):
     if len(potentialMeals) != 0:
         return potentialMeals[random.randint(0,len(potentialMeals)-1)]
 
-    return None
+    return "No meal options"
 
 def reverseBoolean(previous):
     if previous == True:
@@ -104,29 +103,19 @@ def getCurrentDay():
     y = datetime.date(x2,x3,x4)
     dayToday = y.weekday()
     
-    return days[dayToday]
+    return days[dayToday], dayToday
 
-##mealsArray = readMealsFile()
-##potentialMeals = filterMeals(mealsArray,'n','n','b')
-##potentialMeals2 = filterMeals(mealsArray,'n','n','c')
-##potentialMeals3 = filterMeals(mealsArray,'y','n','v')
-##
-##print(potentialMeals)
-##print(len(potentialMeals))
-##
-##print(potentialMeals2)
-##print(len(potentialMeals2))
-##
-##print(potentialMeals3)
-##print(len(potentialMeals3))
-##
-##allPotentialMeals = [potentialMeals,potentialMeals2,potentialMeals3]
-##meals = combineMultipleFilters(allPotentialMeals)
-##
-##print(meals)
-##print(len(meals))
-##
-##for i in range(7):
-##    print(generateMeal(meals))
+def generateNewRandomMeal(name):
+    mealsArray = readCSVFile(name)
 
-print(getCurrentDay())
+    if len(mealsArray) != 0:
+        potentialMeals = combineMultipleFilters([filterMeals(mealsArray,None,'n',None),filterMeals(mealsArray,None,'s',None)])
+
+        if len(potentialMeals) == 1:
+            return potentialMeals[0]
+        
+        x = random.randint(0,len(potentialMeals)-1)
+
+        return potentialMeals[x]
+
+    return "No meal options"

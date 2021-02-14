@@ -119,3 +119,41 @@ def generateNewRandomMeal(name):
         return potentialMeals[x]
 
     return "No meal options"
+
+def mealByDayBox(dayDiff):
+    days = ("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")
+    
+    date = getCurrentDate()
+    day, pos = getCurrentDay()
+
+    if dayDiff != 0:
+        if dayDiff > 0:
+
+            ##### day #####
+            for i in range(dayDiff):
+                pos += 1
+                
+                if pos == 7:
+                    pos = 0
+
+            ##### date #####
+            x = datetime.datetime.now() + datetime.timedelta(days=dayDiff)
+            date = x.strftime("%d/%m/%y")
+
+        else:
+            dayDiff = dayDiff * -1
+
+            ##### day #####
+            for i in range(dayDiff):
+                pos -= 1
+                
+                if pos == -1:
+                    pos = 6
+
+            ##### date #####
+            x = datetime.datetime.now() - datetime.timedelta(days=dayDiff)
+            date = x.strftime("%d/%m/%y")
+
+    day = days[pos]    
+
+    return [date,day]   

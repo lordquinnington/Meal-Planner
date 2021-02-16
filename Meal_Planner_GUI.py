@@ -2,8 +2,8 @@
 
 import pygame
 from time import sleep
-from Meal_Output_Generator_Size import findSize
-from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate
+from Meal_Output_Generator_Size import findSize, findPlanSize
+from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan
 
 def MPGUImain():
     pygame.init()
@@ -16,6 +16,7 @@ def MPGUImain():
     mealByDay = mealByDayBox(dayDiff)
     weekDiff = 0
     shortDate = getShortDate(weekDiff)
+    mealPlan = getMealPlan(weekDiff)
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     running = True
     inMain = True
@@ -170,6 +171,10 @@ def MPGUImain():
                     pygame.draw.rect(display,purple,(250*i+20,555,230,45),border_radius=8)
                     pygame.draw.rect(display,purple,(250*i+20,555,230,45),border_radius=8,width=2)
 
+                    if i == 1:
+                        newMealPlan(weekDiff)
+                        mealPlan = getMealPlan(weekDiff)
+
         display.blit(text3.render("Settings",False,lightGrey),(83,560))
         display.blit(text3.render("New Plan",False,lightGrey),(325,560))
             
@@ -212,6 +217,7 @@ def MPGUImain():
                 if weekDiff > -2:
                     weekDiff -= 1
                     shortDate = getShortDate(weekDiff)
+                    mealPlan = getMealPlan(weekDiff)
             
             pygame.draw.rect(display,purple,(541,562,91,29),border_radius=3,width=1)
 
@@ -224,6 +230,7 @@ def MPGUImain():
                 if weekDiff < 2:
                     weekDiff += 1
                     shortDate = getShortDate(weekDiff)
+                    mealPlan = getMealPlan(weekDiff)
             
             pygame.draw.rect(display,purple,(802,562,92,29),border_radius=3,width=1)
 
@@ -232,6 +239,27 @@ def MPGUImain():
 
         pygame.draw.polygon(display,purple,((890,576),(875,565),(875,587)))     # triangles for the arrows
         pygame.draw.polygon(display,purple,((543,576),(558,565),(558,587)))     # left/right vertex, top vertex, bottom vertex
+
+
+        ################################ displaying week plan stuff ################################
+
+        for i in range(7):
+            if mealPlan[i][1] == '':
+                x1,y1,x2,y2 = findPlanSize(len(mealPlan[i][0]),False,None)
+                mealPlanDay = pygame.font.SysFont('verdana',x1)
+                display.blit(mealPlanDay.render(mealPlan[i][0],False,purple),(604,74*i+17+y1))
+
+            else:
+                x1,y1,x2,y2 = findPlanSize(len(mealPlan[i][0]),True,len(mealPlan[i][1]))
+                mealPlanDay = pygame.font.SysFont('verdana',x1)
+                display.blit(mealPlanDay.render(mealPlan[i][0],False,purple),(604,74*i+17+y1))
+                mealPlanDayVeggie = pygame.font.SysFont('verdana',x2)
+                display.blit(mealPlanDayVeggie.render(mealPlan[i][1],False,purple),(604,74*i+17+y2))
+        
+
+        ##############################################################################
+        ############################## updating display ##############################
+        ##############################################################################
 
         pygame.display.flip()
         sleep(0.082)

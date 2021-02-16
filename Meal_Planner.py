@@ -153,7 +153,41 @@ def writeMealPlanFile(mealPlan,fileNumber):
         for row in mealPlan:
             CSVWriter.writerow(row)
 
+def updateMealPlanByAWeek():
+    plans = []
+    
+    for i in range(1,5):
+        name = "Meal_Plan_"+str(i)
+        weekPlan = readCSVFile(name)
+        plans.append(weekPlan)
+
+    for i in range(4):
+        writeMealPlanFile(plans[i],str(i))
+
+    writeMealPlanFile(generateMealPlan(),"4")
+
+def checkToUpdatePlanFiles():
+    wc = getWeekCommencing()
+    weekCommencing = wc.strftime("%d/%m/%y")
+
+    lu = readCSVFile("Meal_Plan_Update")
+    lastUpdated = lu[0][0]
+
+    if weekCommencing == lastUpdated:
+        return
+
+    writeMealPlanFile([[weekCommencing]],"Update")
+    weeksAgo = 0
+    
+    while lastUpdated != weekCommencing:
+        wc = wc - datetime.timedelta(weeks=1)
+        weekCommencing = wc.strftime("%d/%m/%y")
+        weeksAgo += 1
+        updateMealPlanByAWeek()
+
 def getMealPlan(weekDiff):
+    checkToUpdatePlanFiles()
+    
     mealPlanFile = str(weekDiff + 2)
 
     mealPlan = readCSVFile("Meal_Plan_"+mealPlanFile)
@@ -165,9 +199,12 @@ def getMealPlan(weekDiff):
         return mealPlan
 
     return mealPlan
-    
-    
-    
+
+def newMealPlan(weekDiff):
+    mealPlan = generateMealPlan()
+
+    writeMealPlanFile(mealPlan,str(weekDiff+2))
+
 
 
 

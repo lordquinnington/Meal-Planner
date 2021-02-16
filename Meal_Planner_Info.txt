@@ -1,4 +1,4 @@
-CSV: meal name,vegetarian: yes(y)/no(n), type of meal: roast(r)/normal(n)/soup(s), type of meat: beef(b)/pork(p)/fish(f)/chicken(c)/veggie(v)
+CSV: meal name,vegetarian: yes(y)/no(n), type of meal: roast(r)/normal(n)/soup(s), type of meat: beef(b)/pork(p)/fish(f)/chicken(c)/veggie(v)/other(o)
 
 Notes:
 - perhaps a seperate file for "try something new" meals

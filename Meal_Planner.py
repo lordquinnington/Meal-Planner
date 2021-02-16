@@ -1,7 +1,7 @@
 #~~~~~ Meal Planner ~~~~~#
 
 import csv, random, datetime
-from Meal_Filter import *
+from Meal_Filter_v2 import getOptions
 
 def readCSVFile(name):
     with open(name+".csv") as file:
@@ -135,8 +135,36 @@ def generateMealPlan():
     weekPlan = []
 
     for i in range(7):
-        if template[i][0] != None
+        mealForDay = []
 
+        options = getOptions(mealsArray,template[i])
+        meal = generateMeal(options)
+
+        mealForDay.append(meal)
+        mealForDay.append('')     # blank for veggie meal
+
+        weekPlan.append(mealForDay)
+
+    return weekPlan
+
+def writeMealPlanFile(mealPlan,fileNumber):
+    with open("Meal_Plan_"+fileNumber+".csv","w",newline='') as planFile:
+        CSVWriter = csv.writer(planFile,delimiter=',')
+        for row in mealPlan:
+            CSVWriter.writerow(row)
+
+def getMealPlan(weekDiff):
+    mealPlanFile = str(weekDiff + 2)
+
+    mealPlan = readCSVFile("Meal_Plan_"+mealPlanFile)
+
+    if len(mealPlan) == 0:
+        mealPlan = generateMealPlan()
+        writeMealPlanFile(mealPlan,mealPlanFile)
+
+        return mealPlan
+
+    return mealPlan
     
     
     

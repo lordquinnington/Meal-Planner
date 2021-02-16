@@ -1,13 +1,15 @@
 #~~~~~ Filter Meals ~~~~~#
 
-
 def filterByProperty(prop,rProp):      # prop => property of it, r => required
     if rProp == prop:
         return True
 
     return False
 
-def filterMeals(mealsArray,veggie,meal,meat):
+def filterMeals(mealsArray,filters):
+    veggie = filters[0]
+    meal = filters[1]
+    meat = filters[2]
     potentialMeals = []
     typeVeggie = []
     typeMeal = []
@@ -67,7 +69,23 @@ def findOptions(mealsArray,filters):
     options = []
 
     for i in range(len(filters)):
-        if 1 < len(filters[i]) <= 3:
+        if filters[i] != None:
+            if len(filters[i]) > 1:
+                for j in range(len(filters[i])-1):
+                    for k in range(1,len(filters[i])):
+                        f1 = [0 for l in range(len(filters))]
+                        f1[i] = filters[i][j]
+                        for m in range(len(f1)):
+                            if f1[m] == 0 :
+                                f1[m] = None
+                        m1 = filterMeals(mealsArray,f1)
+                        
+                        f2 = [0 for l in range(len(filters))]
+                        f2[i] = filters[i][k]
+                        for m in range(len(f2)):
+                            if f2[m] == 0 :
+                                f2[m] = None
+                        m2 = filterMeals(mealsArray,f2)
             
 
 

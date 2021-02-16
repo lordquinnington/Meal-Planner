@@ -1,7 +1,5 @@
 #~~~~~ Filter Meals ~~~~~#
 
-import csv ########
-
 def filterProperty(prop,rProp):
     # takes a property and checks it against the required property
     # designed to be used in an external loop
@@ -57,14 +55,13 @@ def combineFilters(allPossibleMeals):
     potentialMeals = list(set(potentialMeals))
     
     return potentialMeals
-                    
-def readCSVFile():
-    with open("Meals.csv") as file:
-        array = list(csv.reader(file))
 
-    return array
 
-x = readCSVFile()
-y = retrievePossibleMeals(x,['n','s','pco'])
-print(y,"\n")
-print(combineFilters(y))
+def getOptions(mealsArray,filters):
+    # takes filters array and the meals array parameter so csv doesnt have to be imported in this file
+    # returns back an array of all the meals which match the filters given
+
+    temp1 = retrievePossibleMeals(mealsArray,filters)
+    options = combineFilters(temp1)
+
+    return options

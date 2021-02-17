@@ -2,7 +2,7 @@
 
 import pygame
 from time import sleep
-from Meal_Output_Generator_Size import findSize, findPlanSize
+from Meal_Output_Generator_Size import findSize, findPlanSize, findMBDSize
 from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay
 
 def MPGUImain():
@@ -158,9 +158,17 @@ def MPGUImain():
         pygame.draw.polygon(display,purple,((470,401),(460,416),(480,416)))     # triangles for the arrows
         pygame.draw.polygon(display,purple,((470,534),(460,519),(480,519)))     # top vertex, left vertex, right vertex
 
+        if mealForDay[1] == '':
+            x1,y1,x2,y2 = findMBDSize(len(mealForDay[0]),False,None)
+            mealForDayText = pygame.font.SysFont('verdana',x1)
+            display.blit(mealForDayText.render(mealForDay[0],False,purple),(43,440+y1))
 
-        display.blit(text3.render(mealForDay[0],False,orange),(40,450))
-
+        else:
+            x1,y1,x2,y2 = findMBDSize(len(mealForDay[0]),True,len(mealForDay[1]))
+            mealForDayText = pygame.font.SysFont('verdana',x1)
+            display.blit(mealForDayText.render(mealForDay[0],False,purple),(43,440+y1))
+            mealForDayTextVeggie = pygame.font.SysFont('verdana',x2)
+            display.blit(mealForDayTextVeggie.render(mealForDay[1],False,purple),(43,440+y2))
 
         
         ################################ bottom buttons ################################

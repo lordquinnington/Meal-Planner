@@ -67,3 +67,52 @@ def findVPlanYSize(size):
     if y2 < 0:
         return 0
     return y2
+
+
+################################ meal by day box ################################
+
+def findMBDSize(chars,veggieMeal,vChars):
+    if not veggieMeal:
+        x1 = findMBDFontSize(chars)
+        vx1 = None
+        y1 = findMBDYSize(x1)
+        vy1 = None
+
+    else:
+        x1 = findVMBDFontSize(chars)
+        vx1 = findVMBDFontSize(vChars)
+        y1 = findVMBDYSize(x1)
+        vy1 = 43 + findVMBDYSize(vx1)
+
+    return x1, y1, vx1, vy1
+
+def findMBDFontSize(chars):
+    x1 = 560/chars
+    x2 = int(round(x1,0))
+    if x2 > 70:
+        return 70
+    return x2
+
+def findMBDYSize(size):
+    y1 = size/2
+    y2 = int(round(40-y1,0))
+    if y2 < 0:
+        return 0
+    return y2
+
+def findVMBDFontSize(chars):
+    x1 = 300/chars
+    x2 = int(round(x1,0))
+    if x2 > 31:
+        return 31
+    return x2
+
+def findVMBDYSize(size):
+    y1 = size/2
+    y2 = int(round(20-y1,0))
+    if y2 < 0:
+        return 0
+    return y2
+
+
+

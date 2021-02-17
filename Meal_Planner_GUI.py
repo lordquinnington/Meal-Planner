@@ -3,7 +3,7 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize, findPlanSize
-from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan
+from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay
 
 def MPGUImain():
     pygame.init()
@@ -14,6 +14,7 @@ def MPGUImain():
     mealGeneratedOutput = ""
     dayDiff = 0
     mealByDay = mealByDayBox(dayDiff)
+    mealForDay = getMealForDay(dayDiff)
     weekDiff = 0
     shortDate = getShortDate(weekDiff)
     mealPlan = getMealPlan(weekDiff)
@@ -134,6 +135,7 @@ def MPGUImain():
                 if dayDiff < 14:
                     dayDiff += 1
                     mealByDay = mealByDayBox(dayDiff)
+                    mealForDay = getMealForDay(dayDiff)
             
             pygame.draw.rect(display,purple,(457,399,27,65),border_radius=3,width=1)
 
@@ -146,6 +148,7 @@ def MPGUImain():
                 if dayDiff > -14:
                     dayDiff -= 1
                     mealByDay = mealByDayBox(dayDiff)
+                    mealForDay = getMealForDay(dayDiff)
             
             pygame.draw.rect(display,purple,(457,472,27,65),border_radius=3,width=1)
 
@@ -154,6 +157,9 @@ def MPGUImain():
 
         pygame.draw.polygon(display,purple,((470,401),(460,416),(480,416)))     # triangles for the arrows
         pygame.draw.polygon(display,purple,((470,534),(460,519),(480,519)))     # top vertex, left vertex, right vertex
+
+
+        display.blit(text3.render(mealForDay[0],False,orange),(40,450))
 
 
         

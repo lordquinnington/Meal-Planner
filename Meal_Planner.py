@@ -205,8 +205,32 @@ def newMealPlan(weekDiff):
 
     writeMealPlanFile(mealPlan,str(weekDiff+2))
 
+def getMealForDay(dayDiff):
+    day, pos = getCurrentDay()
+    weekDiff = 0
 
+    if dayDiff != 0:
+        if dayDiff > 0:
+            for i in range(dayDiff):
+                pos += 1
+                
+                if pos == 7:
+                    pos = 0
+                    weekDiff += 1
 
+        else:
+            dayDiff = dayDiff * -1
+
+            for i in range(dayDiff):
+                pos -= 1
+                
+                if pos == -1:
+                    pos = 6
+                    weekDiff -= 1
+            
+    mealPlan = getMealPlan(weekDiff)
+ 
+    return mealPlan[pos]
 
 
 

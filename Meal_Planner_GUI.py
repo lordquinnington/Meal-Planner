@@ -3,7 +3,8 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize, findPlanSize, findMBDSize
-from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay
+from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean
+from Cache import *
 
 def MPGUImain():
     pygame.init()
@@ -22,6 +23,8 @@ def MPGUImain():
     running = True
     inMain = True
     outMain = False
+    popupScreenActive = False
+    mealIdeaFilterScreen = False
 
     darkGrey = (61,57,58,255)     # background
     semiDarkGrey = (70,66,67,255)     # button colour
@@ -67,13 +70,17 @@ def MPGUImain():
             pygame.draw.rect(display,semiDarkGrey,(20,70*i+80,480,60),border_radius=8)
             pygame.draw.rect(display,grey,(20,70*i+80,480,60),border_radius=8,width=2)
             
-            if (20) < mousePos[0] < (500) and (70*i+80) < mousePos[1] < (70*i+140):
+            if (20) < mousePos[0] < (500) and (70*i+80) < mousePos[1] < (70*i+140) and popupScreenActive == False:
                 pygame.draw.rect(display,lightPurple,(20,70*i+80,480,60),border_radius=8)
                 pygame.draw.rect(display,purple,(20,70*i+80,480,60),border_radius=8,width=2)
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.draw.rect(display,purple,(20,70*i+80,480,60),border_radius=8)
                     pygame.draw.rect(display,purple,(20,70*i+80,480,60),border_radius=8,width=2)
+
+                    if i == 0:
+                        popupScreenActive = True
+                        mealIdeaFilterScreen = True
 
                     if i == 1:
                         mealGeneratedOutput = generateNewRandomMeal("Meals")
@@ -92,7 +99,7 @@ def MPGUImain():
         pygame.draw.rect(display,purple,(20,300,480,70),border_radius=5,width=2)     # meal generator output box outline
         display.blit(text3.render("Meal:",False,lightGrey),(28,303))
         
-        if (28) < mousePos[0] < (96) and (336) < mousePos[1] < (364):     # "add..." button logic 
+        if (28) < mousePos[0] < (96) and (336) < mousePos[1] < (364) and popupScreenActive == False:     # "add..." button logic 
             pygame.draw.rect(display,grey,(28,336,68,28),border_radius=4)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -106,7 +113,7 @@ def MPGUImain():
             mealOutputText = pygame.font.SysFont('verdana',x)
             display.blit(mealOutputText.render(mealGeneratedOutput,False,purple),(110,292+y))
             
-        if (480) < mousePos[0] < (496) and (305) < mousePos[1] < (322):     # cross button logic
+        if (480) < mousePos[0] < (496) and (305) < mousePos[1] < (322) and popupScreenActive == False:     # cross button logic
             pygame.draw.rect(display,grey,(481,306,14,15),border_radius=3)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -127,7 +134,7 @@ def MPGUImain():
         display.blit(text6.render(mealByDay[1],False,lightGrey),(43,395))     # date and day text
         display.blit(text6.render(mealByDay[0],False,lightGrey),(270,395))
 
-        if (457) < mousePos[0] < (484) and (398) < mousePos[1] < (463):     # arrow button logic
+        if (457) < mousePos[0] < (484) and (398) < mousePos[1] < (463) and popupScreenActive == False:     # arrow button logic
             pygame.draw.rect(display,grey,(457,399,27,65),border_radius=3)
             
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -140,7 +147,7 @@ def MPGUImain():
             
             pygame.draw.rect(display,purple,(457,399,27,65),border_radius=3,width=1)
 
-        if (457) < mousePos[0] < (484) and (472) < mousePos[1] < (537):
+        if (457) < mousePos[0] < (484) and (472) < mousePos[1] < (537) and popupScreenActive == False:
             pygame.draw.rect(display,grey,(457,472,27,65),border_radius=3)
             
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -178,7 +185,7 @@ def MPGUImain():
             pygame.draw.rect(display,semiDarkGrey,(250*i+20,555,230,45),border_radius=8)
             pygame.draw.rect(display,grey,(250*i+20,555,230,45),border_radius=8,width=2)
 
-            if (250*i+20) < mousePos[0] < (250*i+250) and (555) < mousePos[1] < (600):     # button logic
+            if (250*i+20) < mousePos[0] < (250*i+250) and (555) < mousePos[1] < (600) and popupScreenActive == False:     # button logic
                 pygame.draw.rect(display,lightPurple,(250*i+20,555,230,45),border_radius=8)
                 pygame.draw.rect(display,purple,(250*i+20,555,230,45),border_radius=8,width=2)
 
@@ -210,7 +217,7 @@ def MPGUImain():
         for i in range(7):
             display.blit(text7.render(daysOfWeek[i],False,lightGrey),(530,74*i+23))     # adds the days of the week
 
-            if (530) < mousePos[0] < (587) and (74*i+63) < mousePos[1] < (74*i+90):     # edit button logic
+            if (530) < mousePos[0] < (587) and (74*i+63) < mousePos[1] < (74*i+90) and popupScreenActive == False:     # edit button logic
                 pygame.draw.rect(display,grey,(530,74*i+63,57,27),border_radius=4)
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -224,7 +231,7 @@ def MPGUImain():
 
         display.blit(text1.render(shortDate,False,orange),(643,543))     # week commencing date
 
-        if (541) < mousePos[0] < (631) and (562) < mousePos[1] < (589):     # arrow button logic
+        if (541) < mousePos[0] < (631) and (562) < mousePos[1] < (589) and popupScreenActive == False:     # arrow button logic
             pygame.draw.rect(display,semiDarkGrey,(541,562,91,29),border_radius=3)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -237,7 +244,7 @@ def MPGUImain():
             
             pygame.draw.rect(display,purple,(541,562,91,29),border_radius=3,width=1)
 
-        if (802) < mousePos[0] < (892) and (562) < mousePos[1] < (589):
+        if (802) < mousePos[0] < (892) and (562) < mousePos[1] < (589) and popupScreenActive == False:
             pygame.draw.rect(display,semiDarkGrey,(802,562,92,29),border_radius=3)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -277,7 +284,100 @@ def MPGUImain():
         ####################################################################################
         ############################### new meal idea button ###############################
         ####################################################################################
-        
+
+        if popupScreenActive == True and mealIdeaFilterScreen == True:
+            pygame.draw.rect(display,semiDarkGrey,(175,155,600,300),border_radius=10)
+            pygame.draw.rect(display,lightPurple,(175,155,600,300),border_radius=10,width=3)
+
+            ################################ cross button ################################
+
+            if (747) < mousePos[0] < (763) and (167) < mousePos[1] < (182):     # cross button logic
+                pygame.draw.rect(display,grey,(748,168,14,15),border_radius=3)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(display,semiDarkGrey,(748,168,14,15),border_radius=3)
+
+                    popupScreenActive = False
+                    mealIdeaFilterScreen = True
+
+                pygame.draw.rect(display,red,(747,167,16,17),border_radius=3,width=1)
+
+            display.blit(text5.render("x",False,red),(750,160))      # cross button to remove item generated
+            
+            ################################ filters available ################################
+
+            display.blit(text1.render("Filters",False,lightGrey),(400,160))
+            
+            display.blit(text3.render("Veggie",False,lightGrey),(215,225))
+            display.blit(text3.render("Type of Meal",False,lightGrey),(390,225))
+            display.blit(text3.render("Meat",False,lightGrey),(630,225))
+
+            options = ["yes","no","normal","soup","roast","beef","pork","fish","chicken","veggie","other"]
+            choices = ['y','n','n','s','r','b','p','f','c','v','o']
+
+            chosenFilters = getMealIdeaCache()
+            
+            for i in range(2):
+                display.blit(text5.render(options[i],False,purple),(240,25*i+261))      # vegetarian options
+
+                if (215) < mousePos[0] < (227) and (25*i+270) < mousePos[1] < (25*i+282):
+                    pygame.draw.rect(display,grey,(215,25*i+270,12,12),border_radius=6)
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        chosenFilters[i] = reverseBoolean(chosenFilters[i])
+
+                if chosenFilters[i]:
+                    pygame.draw.rect(display,orange,(215,25*i+270,12,12),border_radius=6)
+
+                pygame.draw.rect(display,orange,(215,25*i+270,12,12),border_radius=6,width=1)
+                
+
+            for i in range(3):
+                display.blit(text5.render(options[i+2],False,purple),(425,25*i+261))     # meal type options
+
+                if (400) < mousePos[0] < (412) and (25*i+270) < mousePos[1] < (25*i+282):
+                    pygame.draw.rect(display,grey,(400,25*i+270,12,12),border_radius=6)
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        chosenFilters[i+2] = reverseBoolean(chosenFilters[i+2])
+
+                if chosenFilters[i+2]:
+                    pygame.draw.rect(display,orange,(400,25*i+270,12,12),border_radius=6)
+
+                pygame.draw.rect(display,orange,(400,25*i+270,12,12),border_radius=6,width=1)
+                
+
+            for i in range(6):
+                display.blit(text5.render(options[i+5],False,purple),(655,25*i+261))     # meat type options
+
+                if (630) < mousePos[0] < (642) and (25*i+270) < mousePos[1] < (25*i+282):
+                    pygame.draw.rect(display,grey,(630,25*i+270,12,12),border_radius=6)
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        chosenFilters[i+5] = reverseBoolean(chosenFilters[i+5])
+
+                if chosenFilters[i+5]:
+                    pygame.draw.rect(display,orange,(630,25*i+270,12,12),border_radius=6)
+
+                pygame.draw.rect(display,orange,(630,25*i+270,12,12),border_radius=6,width=1)
+
+            writeMealIdeaCache(chosenFilters)
+
+            ################################ reset button ################################
+
+            if (191) < mousePos[0] < (271) and (171) < mousePos[1] < (201):
+                pygame.draw.rect(display,grey,(191,171,80,30),border_radius=4)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(display,semiDarkGrey,(191,171,80,30),border_radius=4)
+
+                    chosenFilters = [False for i in range(11)]
+                    writeMealIdeaCache(chosenFilters)
+
+            pygame.draw.rect(display,orange,(191,171,80,30),border_radius=4,width=1)
+            display.blit(text5.render("Reset",False,orange),(203,173))
+
+            
 
 
         ##############################################################################

@@ -57,7 +57,7 @@ def generateNewRandomMeal(name):
     mealsArray = readCSVFile(name)
 
     if len(mealsArray) != 0:
-        potentialMeals = combineMultipleSameFilters([filterMeals(mealsArray,None,'n',None),filterMeals(mealsArray,None,'s',None)])
+        potentialMeals = getOptions(mealsArray,['yn','ns','bpfcvo'])
 
         if len(potentialMeals) == 1:
             return potentialMeals[0]

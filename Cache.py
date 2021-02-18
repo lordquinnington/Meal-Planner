@@ -28,4 +28,4 @@ def writeMealIdeaCache(cch):
         for row in toWrite:
             CSVWriter.writerow(row)
 
-#writeMealIdeaCache([False for i in range(11)])
+def convertCacheToFilters(cache):

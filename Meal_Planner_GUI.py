@@ -377,6 +377,7 @@ def MPGUImain():
             pygame.draw.rect(display,orange,(191,171,80,30),border_radius=4,width=1)
             display.blit(text5.render("Reset",False,orange),(203,173))
 
+            ################################ generate button ################################
             
 
 

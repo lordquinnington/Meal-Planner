@@ -251,7 +251,16 @@ def addMealToPlan(meal,veggie,day,weekDiff):
 
     writeMealPlanFile(weekPlan,str(weekDiff+2))
 
+def checkMealPlansExist():
+    for i in range(5):
+        try:
+            f = open("Meal_Plan_"+str(i)+".csv","x")
+            f.close()
+            mealPlan = generateMealPlan()
+            writeMealPlanFile(mealPlan,str(i))
 
+        except FileExistsError:
+            pass
 
 
 

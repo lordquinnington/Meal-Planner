@@ -3,13 +3,15 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize, findPlanSize, findMBDSize
-from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean, generateMealIdea, addMealToPlan
+from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean, generateMealIdea, addMealToPlan, checkMealPlansExist
 from Cache import *
 
 def MPGUImain():
     pygame.init()
     display = pygame.display.set_mode((950,611))
     pygame.display.set_caption("Meal Planner")
+
+    checkMealPlansExist()
 
     version = "1.0.0"
     mealGeneratedOutput = ""

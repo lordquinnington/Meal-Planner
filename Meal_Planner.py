@@ -240,4 +240,21 @@ def generateMealIdea(filters):
 
     return meal
 
+def addMealToPlan(meal,veggie,day,weekDiff):
+    weekPlan = readCSVFile("Meal_Plan_"+str(weekDiff+2))
+
+    if not veggie:
+        weekPlan[day][0] = meal
+
+    else:
+        weekPlan[day][1] = meal
+
+    writeMealPlanFile(weekPlan,str(weekDiff+2))
+
+
+
+
+
+
+
     

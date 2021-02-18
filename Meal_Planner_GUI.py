@@ -3,7 +3,7 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize, findPlanSize, findMBDSize
-from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean, generateMealIdea
+from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean, generateMealIdea, addMealToPlan
 from Cache import *
 
 def MPGUImain():
@@ -22,9 +22,11 @@ def MPGUImain():
     mealPlan = getMealPlan(weekDiff)
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     daysOfWeekLong = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+    dayToAddTo = [None,None]
     running = True
     inMain = True
     outMain = False
+    addAsVeggieMeal = False
     popupScreenActive = False
     mealIdeaFilterScreen = False
     editPlanDayScreen = False
@@ -456,6 +458,9 @@ def MPGUImain():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         pygame.draw.rect(display,semiDarkGrey,(748,168,14,15),border_radius=3)
 
+                        dayToAddTo = [None,None]
+                        addAsVeggieMeal = False
+
                         popupScreenActive = False
                         addMealToPlanScreen = False
 
@@ -473,13 +478,45 @@ def MPGUImain():
                     if (250) < mousePos[0] < (262) and (25*i+250) < mousePos[1] < (25*i+262):
                         pygame.draw.rect(display,grey,(250,25*i+250,12,12),border_radius=6)
 
-                        #if event.type == pygame.MOUSEBUTTONDOWN:
-                            #chosenFilters[i] = reverseBoolean(chosenFilters[i])
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            dayToAddTo = [daysOfWeek[i],i]
 
-                    #if chosenFilters[i]:
-                        #pygame.draw.rect(display,orange,(215,25*i+270,12,12),border_radius=6)
+                    if i == dayToAddTo[1]:
+                        pygame.draw.rect(display,orange,(250,25*i+250,12,12),border_radius=6)
 
                     pygame.draw.rect(display,orange,(250,25*i+250,12,12),border_radius=6,width=1)
+
+                if (525) < mousePos[0] < (537) and (275) < mousePos[1] < (287):
+                    pygame.draw.rect(display,grey,(525,275,12,12),border_radius=6)
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        addAsVeggieMeal = reverseBoolean(addAsVeggieMeal)
+
+                if addAsVeggieMeal:
+                    pygame.draw.rect(display,orange,(525,275,12,12),border_radius=6)
+
+                pygame.draw.rect(display,orange,(525,275,12,12),border_radius=6,width=1)     # add as veggie meal
+                display.blit(text5.render("Add as veggie meal",False,purple),(550,267))
+
+                ################################ add to meal plan button ################################
+
+                if (525) < mousePos[0] < (725) and (350) < mousePos[1] < (399):
+                    pygame.draw.rect(display,grey,(525,350,200,49),border_radius=4)
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        pygame.draw.rect(display,semiDarkGrey,(525,350,200,49),border_radius=4)
+
+                        if dayToAddTo[0] != None:
+                            addMealToPlan(mealGeneratedOutput,addAsVeggieMeal,dayToAddTo[1],weekDiff)
+                            mealForDay = getMealForDay(dayDiff)
+                            mealPlan = getMealPlan(weekDiff)
+                            popupScreenActive = False
+                            addMealToPlanScreen = False
+                            dayToAddTo = [None,None]
+                            addAsVeggieMeal = False
+
+                pygame.draw.rect(display,purple,(525,350,200,49),border_radius=4,width=2)
+                display.blit(text3.render("Add To Plan",False,lightGrey),(550,357))
             
 
 

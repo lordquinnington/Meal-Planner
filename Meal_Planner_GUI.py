@@ -13,6 +13,7 @@ def MPGUImain():
 
     version = "1.0.0"
     mealGeneratedOutput = ""
+    dayToEdit = ""
     dayDiff = 0
     mealByDay = mealByDayBox(dayDiff)
     mealForDay = getMealForDay(dayDiff)
@@ -20,11 +21,14 @@ def MPGUImain():
     shortDate = getShortDate(weekDiff)
     mealPlan = getMealPlan(weekDiff)
     daysOfWeek = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+    daysOfWeekLong = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
     running = True
     inMain = True
     outMain = False
     popupScreenActive = False
     mealIdeaFilterScreen = False
+    editPlanDayScreen = False
+    addMealToPlanScreen = False
 
     darkGrey = (61,57,58,255)     # background
     semiDarkGrey = (70,66,67,255)     # button colour
@@ -104,6 +108,9 @@ def MPGUImain():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.draw.rect(display,semiDarkGrey,(28,336,68,28),border_radius=4)
+
+                popupScreenActive = True
+                addMealToPlanScreen = True
             
         pygame.draw.rect(display,orange,(28,336,68,28),border_radius=4,width=1)     # outline for the "Add..." button
         display.blit(text4.render("Add...",False,orange),(37,339))     # text for the "Add..." button
@@ -223,6 +230,10 @@ def MPGUImain():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pygame.draw.rect(display,semiDarkGrey,(530,74*i+63,57,27),border_radius=4)
 
+                    popupScreenActive = True
+                    editPlanDayScreen = True
+                    dayToEdit = daysOfWeekLong[i]
+
             pygame.draw.rect(display,orange,(530,74*i+63,57,27),border_radius=4,width=1)
             display.blit(text5.render("Edit",False,orange),(540,74*i+63))
 
@@ -298,7 +309,7 @@ def MPGUImain():
                     pygame.draw.rect(display,semiDarkGrey,(748,168,14,15),border_radius=3)
 
                     popupScreenActive = False
-                    mealIdeaFilterScreen = True
+                    mealIdeaFilterScreen = False
 
                 pygame.draw.rect(display,red,(747,167,16,17),border_radius=3,width=1)
 
@@ -392,12 +403,89 @@ def MPGUImain():
                     
             pygame.draw.rect(display,purple,(380,380,190,50),border_radius=4,width=2)
             display.blit(text3.render("Generate",False,lightGrey),(417,388))
+
+
+
+        #####################################################################################
+        ############################### edit meal plan button ###############################
+        #####################################################################################
+
+        if popupScreenActive == True and editPlanDayScreen == True:
+            pygame.draw.rect(display,semiDarkGrey,(175,155,600,300),border_radius=10)
+            pygame.draw.rect(display,lightPurple,(175,155,600,300),border_radius=10,width=3)
+
+            ################################ cross button ################################
+
+            if (747) < mousePos[0] < (763) and (167) < mousePos[1] < (182):     # cross button logic
+                pygame.draw.rect(display,grey,(748,168,14,15),border_radius=3)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(display,semiDarkGrey,(748,168,14,15),border_radius=3)
+
+                    popupScreenActive = False
+                    editPlanDayScreen = False
+
+                pygame.draw.rect(display,red,(747,167,16,17),border_radius=3,width=1)
+
+            display.blit(text5.render("x",False,red),(750,160))      # cross button to remove item generated
+
+            ################################ edit menu ################################
+
+            display.blit(text1.render("Edit "+dayToEdit,False,lightGrey),(300,160))
+
+
+
+        #######################################################################################
+        ############################### add meal to plan button ###############################
+        #######################################################################################
+
+        if popupScreenActive == True and addMealToPlanScreen == True:
+            if mealGeneratedOutput == "" or mealGeneratedOutput == "No meal options":
+                popupScreenActive = False
+                addMealToPlanScreen = False
+
+            else:
+                pygame.draw.rect(display,semiDarkGrey,(175,155,600,300),border_radius=10)
+                pygame.draw.rect(display,lightPurple,(175,155,600,300),border_radius=10,width=3)
+
+                ################################ cross button ################################
+
+                if (747) < mousePos[0] < (763) and (167) < mousePos[1] < (182):     # cross button logic
+                    pygame.draw.rect(display,grey,(748,168,14,15),border_radius=3)
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        pygame.draw.rect(display,semiDarkGrey,(748,168,14,15),border_radius=3)
+
+                        popupScreenActive = False
+                        addMealToPlanScreen = False
+
+                    pygame.draw.rect(display,red,(747,167,16,17),border_radius=3,width=1)
+
+                display.blit(text5.render("x",False,red),(750,160))      # cross button to remove item generated
+
+                ################################ edit menu ################################
+
+                display.blit(text1.render("Add to...",False,lightGrey),(365,160))
+
+                for i in range(7):
+                    display.blit(text5.render(daysOfWeekLong[i],False,purple),(275,25*i+241))      # days to add to
+
+                    if (250) < mousePos[0] < (262) and (25*i+250) < mousePos[1] < (25*i+262):
+                        pygame.draw.rect(display,grey,(250,25*i+250,12,12),border_radius=6)
+
+                        #if event.type == pygame.MOUSEBUTTONDOWN:
+                            #chosenFilters[i] = reverseBoolean(chosenFilters[i])
+
+                    #if chosenFilters[i]:
+                        #pygame.draw.rect(display,orange,(215,25*i+270,12,12),border_radius=6)
+
+                    pygame.draw.rect(display,orange,(250,25*i+250,12,12),border_radius=6,width=1)
             
 
 
-        ##############################################################################
-        ############################## updating display ##############################
-        ##############################################################################
+        ##################################################################################
+        ############################## updating the display ##############################
+        ##################################################################################
 
         pygame.display.flip()
         sleep(0.082)

@@ -3,7 +3,7 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize, findPlanSize, findMBDSize
-from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean
+from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean, generateMealIdea
 from Cache import *
 
 def MPGUImain():
@@ -313,7 +313,6 @@ def MPGUImain():
             display.blit(text3.render("Meat",False,lightGrey),(630,225))
 
             options = ["yes","no","normal","soup","roast","beef","pork","fish","chicken","veggie","other"]
-            choices = ['y','n','n','s','r','b','p','f','c','v','o']
 
             chosenFilters = getMealIdeaCache()
             
@@ -378,6 +377,21 @@ def MPGUImain():
             display.blit(text5.render("Reset",False,orange),(203,173))
 
             ################################ generate button ################################
+
+            if (380) < mousePos[0] < (570) and (380) < mousePos[1] < (430):
+                pygame.draw.rect(display,grey,(380,380,190,50),border_radius=4)     # generate button logic
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(display,semiDarkGrey,(380,380,190,50),border_radius=4)
+
+                    popupScreenActive = False
+                    mealIdeaFilterScreen = False
+
+                    filters = convertCacheToFilters(chosenFilters)
+                    mealGeneratedOutput = generateMealIdea(filters)
+                    
+            pygame.draw.rect(display,purple,(380,380,190,50),border_radius=4,width=2)
+            display.blit(text3.render("Generate",False,lightGrey),(417,388))
             
 
 

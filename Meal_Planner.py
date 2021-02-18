@@ -232,7 +232,12 @@ def getMealForDay(dayDiff):
  
     return mealPlan[pos]
 
+def generateMealIdea(filters):
+    meals = readCSVFile("Meals")
+    options = getOptions(meals,filters)
 
+    meal = generateMeal(options)
 
+    return meal
 
     

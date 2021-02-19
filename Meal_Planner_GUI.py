@@ -3,7 +3,7 @@
 import pygame
 from time import sleep
 from Meal_Output_Generator_Size import findSize, findPlanSize, findMBDSize
-from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean, generateMealIdea, addMealToPlan, checkMealPlansExist
+from Meal_Planner import generateNewRandomMeal, mealByDayBox, getShortDate, getMealPlan, newMealPlan, getMealForDay, reverseBoolean, generateMealIdea, addMealToPlan, checkMealPlansExist, writeMealPlanFile
 from Cache import *
 
 def MPGUImain():
@@ -241,7 +241,7 @@ def MPGUImain():
 
                     popupScreenActive = True
                     editPlanDayScreen = True
-                    dayToEdit = daysOfWeekLong[i]
+                    dayToEdit = i
                     mainMealEdit = mealPlan[i][0]
                     veggieMealEdit = mealPlan[i][1]
 
@@ -456,7 +456,7 @@ def MPGUImain():
 
             ################################ edit menu ################################
 
-            display.blit(text1.render("Edit "+dayToEdit,False,lightGrey),(300,160))
+            display.blit(text1.render("Edit "+daysOfWeekLong[dayToEdit],False,lightGrey),(300,160))
 
             ################################ new main meal button ################################
 
@@ -508,6 +508,56 @@ def MPGUImain():
                     pygame.draw.rect(display,orange,(580,25*i+270,12,12),border_radius=6)
 
                 pygame.draw.rect(display,orange,(580,25*i+270,12,12),border_radius=6,width=1)
+
+            if (688) < mousePos[0] < (768) and (418) < mousePos[1] < (448):
+                pygame.draw.rect(display,grey,(688,418,80,30),border_radius=4)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(display,semiDarkGrey,(688,418,80,30),border_radius=4)
+
+                    toSwapWith = None
+
+            pygame.draw.rect(display,orange,(688,418,80,30),border_radius=4,width=1)
+            display.blit(text5.render("Clear",False,orange),(701,420))
+
+            ################################ saving buttons ################################
+
+            for i in range(2):
+                if (410) < mousePos[0] < (570) and (65*i+250) < mousePos[1] < (65*i+300):
+                    pygame.draw.rect(display,grey,(410,65*i+250,160,50),border_radius=4)
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        pygame.draw.rect(display,semiDarkGrey,(410,65*i+250,160,50),border_radius=4)
+
+                        if i == 0:
+                            popupScreenActive = False
+                            editPlanDayScreen = False
+
+                            mealPlan[dayToEdit][0] = mainMealEdit
+                            mealPlan[dayToEdit][1] = veggieMealEdit
+
+                            if toSwapWith != None:
+                                temp1 = mealPlan[dayToEdit][0]
+                                temp2 = mealPlan[dayToEdit][1]
+                                mealPlan[dayToEdit][0] = mealPlan[toSwapWith][0]
+                                mealPlan[dayToEdit][1] = mealPlan[toSwapWith][1]
+                                mealPlan[toSwapWith][0] = temp1
+                                mealPlan[toSwapWith][1] = temp2
+                            
+                            toSwapWith = None
+
+                            writeMealPlanFile(mealPlan,str(weekDiff+2))
+
+                        if i == 1:
+                            popupScreenActive = False
+                            editPlanDayScreen = False
+                            toSwapWith = None
+                    
+                pygame.draw.rect(display,purple,(410,65*i+250,160,50),border_radius=4,width=2)
+
+            display.blit(text5.render("Save & Exit",False,lightGrey),(430,261))
+            display.blit(text5.render("Exit Without",False,lightGrey),(426,316))
+            display.blit(text5.render("Saving",False,lightGrey),(454,337))
 
 
 
